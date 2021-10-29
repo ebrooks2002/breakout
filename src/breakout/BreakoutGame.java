@@ -3,20 +3,35 @@ package breakout;
 import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.events.Key;
+import edu.macalester.graphics.events.KeyboardEvent;
+import edu.macalester.graphics.events.KeyboardEventHandler;
 
 /**
  * The game of Breakout.
  */
 public class BreakoutGame {
-    private static final int CANVAS_WIDTH = 600;
-    private static final int CANVAS_HEIGHT = 800;
+    public static final int CANVAS_WIDTH = 600;
+    public static final int CANVAS_HEIGHT = 800;
 
-    private static CanvasWindow canvas;
+    private CanvasWindow canvas;
+    private Paddle paddle;
 
     public BreakoutGame() {
         canvas = new CanvasWindow("Breakout!", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.setBackground(Color.BLACK);
-        canvas.add(new Paddle());
+        paddle = new Paddle();
+        canvas.add(paddle);
+
+        canvas.onKeyDown(event -> {
+            if (event.getKey() == Key.RIGHT_ARROW && canvas.getKeysPressed().size() == 1) {
+                paddle.moveRight();
+            }
+            if (event.getKey() == Key.LEFT_ARROW && canvas.getKeysPressed().size() == 1) {
+                paddle.moveLeft();
+            }
+        });
+
 
     }
 
