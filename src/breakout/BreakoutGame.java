@@ -3,9 +3,7 @@ package breakout;
 import java.awt.Color;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.events.Key;
-import edu.macalester.graphics.events.KeyboardEvent;
-import edu.macalester.graphics.events.KeyboardEventHandler;
+
 
 /**
  * The game of Breakout.
@@ -22,19 +20,9 @@ public class BreakoutGame {
         canvas.setBackground(Color.BLACK);
         paddle = new Paddle();
         canvas.add(paddle);
-
-        canvas.onKeyDown(event -> {
-            if (event.getKey() == Key.RIGHT_ARROW && canvas.getKeysPressed().size() == 1) {
-                paddle.moveRight();
-            }
-            if (event.getKey() == Key.LEFT_ARROW && canvas.getKeysPressed().size() == 1) {
-                paddle.moveLeft();
-            }
-        });
-
-
+        canvas.onMouseMove((mouse) -> paddle.move(mouse.getPosition()));
+        
     }
-
     public static void main(String[] args){
         new BreakoutGame();
     }
