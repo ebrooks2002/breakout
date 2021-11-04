@@ -1,6 +1,7 @@
 package breakout;
 import java.awt.Color;
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
@@ -9,7 +10,6 @@ public class Paddle extends Rectangle {
     public final static Color PADDLE_COLOR = Color.BLUE; 
     public final static int PADDLE_WIDTH = 80;
     public final static int PADDLE_HEIGHT  = 15;
-    public final static int PADDLE_SPEED = 10;
     public final static double Y_VALUE = BreakoutGame.CANVAS_HEIGHT*.88;
     private double xCenter;
    
@@ -27,4 +27,13 @@ public class Paddle extends Rectangle {
             this.setCenter(xCenter, Y_VALUE);
         }
     }
+
+    public void addToCanvas(CanvasWindow canvas){
+        canvas.add(this);
+    }
+
+    public void removeFromCanvas(CanvasWindow canvas){
+        canvas.remove(this);
+    }
+    
 }
