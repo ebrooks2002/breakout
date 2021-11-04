@@ -17,6 +17,11 @@ public class BreakoutGame {
     public BreakoutGame() {
         canvas = new CanvasWindow("Breakout!", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.setBackground(Color.BLACK);
+        paddle = new Paddle();
+        ball = new Ball();
+        ball.addToCanvas(canvas);
+        paddle.addToCanvas(canvas);
+
     }
     public static void main(String[] args){
         BreakoutGame game = new BreakoutGame();
@@ -24,11 +29,9 @@ public class BreakoutGame {
     }
 
     public void run() {
-        paddle = new Paddle();
-        ball = new Ball();
-        ball.addToCanvas(canvas);
-        paddle.addToCanvas(canvas);
-        canvas.onClick((mouse) -> ball.updatePosition());
         canvas.onMouseMove((mouse) -> paddle.move(mouse.getPosition()));
+        canvas.animate(() -> {
+            ball.updatePosition();
+         });
     }
 }

@@ -12,7 +12,8 @@ public class Ball extends Ellipse {
     private double ball_center_x;
     private double ball_center_y;
     private double ball_x_velocity;
-    private double ball_y_veloctity;
+    private double ball_y_velocity;
+    private double initialSpeed;
 
     public Ball() {
         
@@ -20,6 +21,11 @@ public class Ball extends Ellipse {
         
         ball_center_x = BreakoutGame.CANVAS_WIDTH * 0.5;
         ball_center_y = BreakoutGame.CANVAS_HEIGHT * 0.7;
+        
+        double initialAngleInRadians = Math.toRadians(180);
+        this.ball_x_velocity = initialSpeed * Math.cos(initialAngleInRadians);
+        this.ball_y_velocity = initialSpeed * -Math.sin(initialAngleInRadians);
+
         this.setCenter(ball_center_x, ball_center_y);
         this.setFillColor(BALL_COLOR);
         
@@ -42,9 +48,12 @@ public class Ball extends Ellipse {
     }
 
     public void updatePosition() {
-        while (ballInBounds()) {
-            ball_center_x = this.getCenterX() + (ball_x_velocity * 0.1);
-            ball_center_y = this.getCenterY() - (ball_y_veloctity * 0.1);
+        
+        if (this.ballInBounds()){
+            
+            ball_center_x = this.getCenterX() + (ball_x_velocity);
+            ball_center_y = this.getCenterY() - (ball_y_velocity);
+            System.out.println("hi");
             this.setCenter(ball_center_x, ball_center_y);
         }
     }
@@ -59,5 +68,7 @@ public class Ball extends Ellipse {
             return false;
         }
     }
+
+    
 }
 
