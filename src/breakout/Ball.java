@@ -14,6 +14,7 @@ public class Ball extends Ellipse {
     private double ball_x_velocity;
     private double ball_y_velocity;
     private double initialSpeed;
+    private double angleInRadians;
 
     public Ball() {
         
@@ -21,10 +22,11 @@ public class Ball extends Ellipse {
         
         ball_center_x = BreakoutGame.CANVAS_WIDTH * 0.5;
         ball_center_y = BreakoutGame.CANVAS_HEIGHT * 0.7;
+        initialSpeed = 5;
         
-        double initialAngleInRadians = Math.toRadians(180);
-        this.ball_x_velocity = initialSpeed * Math.cos(initialAngleInRadians);
-        this.ball_y_velocity = initialSpeed * -Math.sin(initialAngleInRadians);
+        angleInRadians = Math.toRadians(45);
+        this.ball_x_velocity = initialSpeed * Math.cos(angleInRadians);
+        this.ball_y_velocity = initialSpeed * -Math.sin(angleInRadians);
 
         this.setCenter(ball_center_x, ball_center_y);
         this.setFillColor(BALL_COLOR);
@@ -49,16 +51,17 @@ public class Ball extends Ellipse {
 
     public void updatePosition() {
         
-        if (this.ballInBounds()){
-            
+        if (this.ballInBounds()) {
             ball_center_x = this.getCenterX() + (ball_x_velocity);
             ball_center_y = this.getCenterY() - (ball_y_velocity);
-            System.out.println("hi");
             this.setCenter(ball_center_x, ball_center_y);
+        }
+        else {
+            this.bounce();
         }
     }
 
-    public boolean ballInBounds(){
+    public boolean ballInBounds() {
         boolean inXBounds = (ball_center_x < BreakoutGame.CANVAS_WIDTH) && (ball_center_x > 0);
         boolean inYBounds = (ball_center_y < BreakoutGame.CANVAS_HEIGHT && ball_center_y > 0);
         if (inXBounds && inYBounds) {
@@ -69,6 +72,16 @@ public class Ball extends Ellipse {
         }
     }
 
+    public void bounce() {
+        
+        this.angleInRadians = -1 * angleInRadians;
+        
+        this.ball_x_velocity = -1 * ball_x_velocity;
+        this.ball_y_velocity = -1 * ball_y_velocity;
+        ball_center_x = this.getCenterX() + (ball_x_velocity);
+        ball_center_y = this.getCenterY() - (ball_y_velocity);
+        this.setCenter(ball_center_x, ball_center_y);
+    }
     
 }
 
