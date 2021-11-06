@@ -13,6 +13,7 @@ public class BreakoutGame {
     private CanvasWindow canvas;
     private Paddle paddle;
     private Ball ball;
+    private static int lives = 3;
 
     public BreakoutGame() {
         canvas = new CanvasWindow("Breakout!", CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -21,6 +22,7 @@ public class BreakoutGame {
         ball = new Ball();
         ball.addToCanvas(canvas);
         paddle.addToCanvas(canvas);
+        
 
     }
     public static void main(String[] args){
@@ -33,5 +35,13 @@ public class BreakoutGame {
         canvas.animate(() -> {
             ball.updatePosition();
          });
+    }
+
+    public static void setLives(int n) {
+        lives = n;
+    }
+
+    public static int getLives(){
+        return lives;
     }
 }

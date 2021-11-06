@@ -51,21 +51,31 @@ public class Ball extends Ellipse {
     }
 
     public void updatePosition() {
-        
-        if (this.ballInBounds()) {
-            centerX = this.getCenterX() + (xVelocity);
-            centerY = this.getCenterY() - (yVelocity);
-            this.setCenter(centerX, centerY);
+
+        centerX = this.getCenterX() + xVelocity;
+        centerY = this.getCenterY() + yVelocity;
+        setCenter(centerX, centerY);
+
+        if (wallHit()) {
+            xVelocity = -1 * xVelocity;
+            centerX = this.getCenterX() + xVelocity;
+            centerY = this.getCenterY() + yVelocity;
+            setCenter(centerX, centerY);
         }
-        else {
-            this.bounce();
+        else if (ceilingHit()) {
+            yVelocity = -1 * yVelocity;
+            centerX = this.getCenterX() + xVelocity;
+            centerY = this.getCenterY() + yVelocity;
+            setCenter(centerX, centerY);
+        }
+        else if (floorHit()){
+            BreakoutGame.setLives(BreakoutGame.getLives() -1);
+            this.setCenter(BreakoutGame.CANVAS_WIDTH * 0.5, BreakoutGame.CANVAS_HEIGHT * 0.7);
         }
     }
-
-    public boolean ballInBounds() {
-        boolean inXBounds = (centerX < BreakoutGame.CANVAS_WIDTH) && (centerX > 0);
-        boolean inYBounds = (centerY < BreakoutGame.CANVAS_HEIGHT && centerY > 0);
-        if (inXBounds && inYBounds) {
+    
+    public boolean wallHit() {
+        if (this.getCenterX() < 0 || this.getCenterX() > BreakoutGame.CANVAS_WIDTH){
             return true;
         }
         else {
@@ -73,31 +83,28 @@ public class Ball extends Ellipse {
         }
     }
 
-    public void bounce() {
-
-    if (this.getCenterY() > 0) {
-        if (this.yVelocity > 0) {
-            this.angleInRadians = -1 * angleInRadians;
-            this.xVelocity = -1 * xVelocity;
-            centerX = this.getCenterX() + xVelocity;
-            centerY = this.getCenterY() + yVelocity;
-        }   
+    public boolean ceilingHit() {
+        if (this.getCenterY() < 0) {
+            System.out.println("hi");
+            return true;
+        }
         else {
-            this.yVelocity = -1 * yVelocity;
-            this.xVelocity = -1 * xVelocity;
-            centerX = this.getCenterX() + (xVelocity);
-            centerY = this.getCenterY() - (yVelocity);
-            
+            return false;
         }
     }
-    else {
-        
-        this.angleInRadians = -1 * angleInRadians;
-        this.yVelocity =  -1 * yVelocity;
-        centerX = this.getCenterX() + xVelocity;
-        centerY = this.getCenterY() + yVelocity;
-        
+
+    public boolean floorHit() {
+        if (this.getCenterY() > BreakoutGame.CANVAS_HEIGHT) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
+
+    public boolean paddleHit() { 
+        return true;
     }
+
 }
 

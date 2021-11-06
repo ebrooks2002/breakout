@@ -7,7 +7,7 @@ import edu.macalester.graphics.Rectangle;
 
 public class Paddle extends Rectangle {
 
-    public final static Color PADDLE_COLOR = Color.BLUE; 
+    public final static Color PADDLE_COLOR = Color.GREEN; 
     public final static int PADDLE_WIDTH = 80;
     public final static int PADDLE_HEIGHT  = 15;
     public final static double Y_VALUE = BreakoutGame.CANVAS_HEIGHT*.88;
