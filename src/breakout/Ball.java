@@ -9,10 +9,11 @@ public class Ball extends Ellipse {
     public static final Color BALL_COLOR  = Color.WHITE;
     public static final double BALL_RADIUS = 10;
 
-    private double ball_center_x;
-    private double ball_center_y;
-    private double ball_x_velocity;
-    private double ball_y_velocity;
+    private double centerX;
+    private double centerY;
+    private double xVelocity;
+    private double yVelocity;
+
     private double initialSpeed;
     private double angleInRadians;
 
@@ -20,25 +21,25 @@ public class Ball extends Ellipse {
         
         super(0, 0, BALL_RADIUS*2, BALL_RADIUS*2);
         
-        ball_center_x = BreakoutGame.CANVAS_WIDTH * 0.5;
-        ball_center_y = BreakoutGame.CANVAS_HEIGHT * 0.7;
+        centerX = BreakoutGame.CANVAS_WIDTH * 0.5;
+        centerY = BreakoutGame.CANVAS_HEIGHT * 0.7;
         initialSpeed = 5;
         
         angleInRadians = Math.toRadians(45);
-        this.ball_x_velocity = initialSpeed * Math.cos(angleInRadians);
-        this.ball_y_velocity = initialSpeed * -Math.sin(angleInRadians);
+        this.xVelocity = initialSpeed * Math.cos(angleInRadians);
+        this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
 
-        this.setCenter(ball_center_x, ball_center_y);
+        this.setCenter(centerX, centerY);
         this.setFillColor(BALL_COLOR);
         
     }
 
     public double getCenterX() {
-        return ball_center_x;
+        return centerX;
     }
 
     public double getCenterY() {
-        return ball_center_y;
+        return centerY;
     }
 
     public void addToCanvas(CanvasWindow canvas) {
@@ -52,9 +53,9 @@ public class Ball extends Ellipse {
     public void updatePosition() {
         
         if (this.ballInBounds()) {
-            ball_center_x = this.getCenterX() + (ball_x_velocity);
-            ball_center_y = this.getCenterY() - (ball_y_velocity);
-            this.setCenter(ball_center_x, ball_center_y);
+            centerX = this.getCenterX() + (xVelocity);
+            centerY = this.getCenterY() - (yVelocity);
+            this.setCenter(centerX, centerY);
         }
         else {
             this.bounce();
@@ -62,8 +63,8 @@ public class Ball extends Ellipse {
     }
 
     public boolean ballInBounds() {
-        boolean inXBounds = (ball_center_x < BreakoutGame.CANVAS_WIDTH) && (ball_center_x > 0);
-        boolean inYBounds = (ball_center_y < BreakoutGame.CANVAS_HEIGHT && ball_center_y > 0);
+        boolean inXBounds = (centerX < BreakoutGame.CANVAS_WIDTH) && (centerX > 0);
+        boolean inYBounds = (centerY < BreakoutGame.CANVAS_HEIGHT && centerY > 0);
         if (inXBounds && inYBounds) {
             return true;
         }
@@ -73,15 +74,30 @@ public class Ball extends Ellipse {
     }
 
     public void bounce() {
+
+    if (this.getCenterY() > 0) {
+        if (this.yVelocity > 0) {
+            this.angleInRadians = -1 * angleInRadians;
+            this.xVelocity = -1 * xVelocity;
+            centerX = this.getCenterX() + xVelocity;
+            centerY = this.getCenterY() + yVelocity;
+        }   
+        else {
+            this.yVelocity = -1 * yVelocity;
+            this.xVelocity = -1 * xVelocity;
+            centerX = this.getCenterX() + (xVelocity);
+            centerY = this.getCenterY() - (yVelocity);
+            
+        }
+    }
+    else {
         
         this.angleInRadians = -1 * angleInRadians;
+        this.yVelocity =  -1 * yVelocity;
+        centerX = this.getCenterX() + xVelocity;
+        centerY = this.getCenterY() + yVelocity;
         
-        this.ball_x_velocity = -1 * ball_x_velocity;
-        this.ball_y_velocity = -1 * ball_y_velocity;
-        ball_center_x = this.getCenterX() + (ball_x_velocity);
-        ball_center_y = this.getCenterY() - (ball_y_velocity);
-        this.setCenter(ball_center_x, ball_center_y);
     }
-    
+    }
 }
 
