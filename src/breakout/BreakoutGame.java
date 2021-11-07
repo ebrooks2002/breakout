@@ -22,8 +22,6 @@ public class BreakoutGame {
         ball = new Ball();
         ball.addToCanvas(canvas);
         paddle.addToCanvas(canvas);
-        
-
     }
     public static void main(String[] args){
         BreakoutGame game = new BreakoutGame();
@@ -33,7 +31,7 @@ public class BreakoutGame {
     public void run() {
         canvas.onMouseMove((mouse) -> paddle.move(mouse.getPosition()));
         canvas.animate(() -> {
-            ball.updatePosition();
+            ball.updatePosition(canvas);
          });
     }
 

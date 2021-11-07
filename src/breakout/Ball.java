@@ -31,7 +31,7 @@ public class Ball extends Ellipse {
 
         this.setCenter(centerX, centerY);
         this.setFillColor(BALL_COLOR);
-        
+    
     }
 
     public double getCenterX() {
@@ -50,12 +50,12 @@ public class Ball extends Ellipse {
         canvas.remove(this);
     }
 
-    public void updatePosition() {
-
+    public void updatePosition(CanvasWindow canvas) {
         centerX = this.getCenterX() + xVelocity;
         centerY = this.getCenterY() + yVelocity;
         setCenter(centerX, centerY);
-
+        System.out.println(this.getX());
+        System.out.println(this.getY());
         if (wallHit()) {
             xVelocity = -1 * xVelocity;
             centerX = this.getCenterX() + xVelocity;
@@ -68,12 +68,12 @@ public class Ball extends Ellipse {
             centerY = this.getCenterY() + yVelocity;
             setCenter(centerX, centerY);
         }
-        else if (floorHit()){
+        else if (floorHit()) {
             BreakoutGame.setLives(BreakoutGame.getLives() -1);
             this.setCenter(BreakoutGame.CANVAS_WIDTH * 0.5, BreakoutGame.CANVAS_HEIGHT * 0.7);
         }
     }
-    
+
     public boolean wallHit() {
         if (this.getCenterX() < 0 || this.getCenterX() > BreakoutGame.CANVAS_WIDTH){
             return true;
@@ -85,7 +85,6 @@ public class Ball extends Ellipse {
 
     public boolean ceilingHit() {
         if (this.getCenterY() < 0) {
-            System.out.println("hi");
             return true;
         }
         else {
