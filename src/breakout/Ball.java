@@ -7,7 +7,7 @@ import edu.macalester.graphics.Ellipse;
 public class Ball extends Ellipse {
 
     public static final Color BALL_COLOR  = Color.WHITE;
-    public static final double BALL_RADIUS = 10;
+    public static final double BALL_RADIUS = Paddle.PADDLE_WIDTH * 0.075;
 
     private double centerX;
     private double centerY;
@@ -16,6 +16,7 @@ public class Ball extends Ellipse {
 
     private double initialSpeed;
     private double angleInRadians;
+    private BallManager ballManager = new BallManager();
 
     public Ball() {
         
@@ -50,7 +51,7 @@ public class Ball extends Ellipse {
         canvas.remove(this);
     }
 
-    public void updatePosition(CanvasWindow canvas) {
+    public void updatePosition(CanvasWindow canvas, Paddle paddle) {
         centerX = this.getCenterX() + xVelocity;
         centerY = this.getCenterY() + yVelocity;
         setCenter(centerX, centerY);
@@ -62,6 +63,22 @@ public class Ball extends Ellipse {
             centerY = this.getCenterY() + yVelocity;
             setCenter(centerX, centerY);
         }
+        else if (ballManager.paddleIntersection(this, paddle , canvas) == "leftbounce") {
+            yVelocity = -1 * yVelocity;
+            xVelocity = -1 * (Math.abs(xVelocity));
+            centerX = this.getCenterX() + xVelocity;
+            centerY = this.getCenterY() + yVelocity;
+            setCenter(centerX, centerY);
+        }
+
+        else if (ballManager.paddleIntersection(this, paddle, canvas) == "rightbounce") {
+            yVelocity = -1 * yVelocity;
+            xVelocity = Math.abs(xVelocity);
+            centerX = this.getCenterX() + xVelocity;
+            centerY = this.getCenterY() + yVelocity;
+            setCenter(centerX, centerY);
+        }
+
         else if (ceilingHit()) {
             yVelocity = -1 * yVelocity;
             centerX = this.getCenterX() + xVelocity;
