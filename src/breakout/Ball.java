@@ -1,5 +1,6 @@
 package breakout;
 import java.awt.Color;
+import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Ellipse;
@@ -26,7 +27,9 @@ public class Ball extends Ellipse {
         centerY = BreakoutGame.CANVAS_HEIGHT * 0.7;
         initialSpeed = 5;
         
-        angleInRadians = Math.toRadians(45);
+        Random rand = new Random();
+
+        angleInRadians = Math.toRadians(rand.nextInt(90) + 225);
         this.xVelocity = initialSpeed * Math.cos(angleInRadians);
         this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
 
@@ -51,12 +54,13 @@ public class Ball extends Ellipse {
         canvas.remove(this);
     }
 
-    public void updatePosition(CanvasWindow canvas, Paddle paddle) {
+    public void updatePosition(CanvasWindow canvas, Paddle paddle, Bricks bricks) {
         centerX = this.getCenterX() + xVelocity;
         centerY = this.getCenterY() + yVelocity;
         setCenter(centerX, centerY);
         System.out.println(this.getX());
         System.out.println(this.getY());
+
         if (wallHit()) {
             xVelocity = -1 * xVelocity;
             centerX = this.getCenterX() + xVelocity;
@@ -88,11 +92,25 @@ public class Ball extends Ellipse {
         else if (floorHit()) {
             BreakoutGame.setLives(BreakoutGame.getLives() -1);
             this.setCenter(BreakoutGame.CANVAS_WIDTH * 0.5, BreakoutGame.CANVAS_HEIGHT * 0.7);
+            canvas.pause(300);
+            canvas.draw();
+            Random rand = new Random();
+            angleInRadians = Math.toRadians(rand.nextInt(90) + 225);
+            this.xVelocity = initialSpeed * Math.cos(angleInRadians);
+            this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
+
+        }
+        
+        else if (ballManager.brickIntersection(this, bricks, canvas) == "topbounce") {
+            yVelocity = -1 * yVelocity;
+            centerX = this.getCenterX() + xVelocity;
+            centerY = this.getCenterY() + yVelocity;
+            setCenter(centerX, centerY);
         }
     }
 
     public boolean wallHit() {
-        if (this.getCenterX() < 0 || this.getCenterX() > BreakoutGame.CANVAS_WIDTH){
+        if (this.getCenterX() - BALL_RADIUS < 0 || this.getCenterX() + BALL_RADIUS > BreakoutGame.CANVAS_WIDTH){
             return true;
         }
         else {
@@ -101,7 +119,7 @@ public class Ball extends Ellipse {
     }
 
     public boolean ceilingHit() {
-        if (this.getCenterY() < 0) {
+        if (this.getCenterY() - BALL_RADIUS < 0) {
             return true;
         }
         else {
