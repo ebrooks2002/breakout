@@ -8,7 +8,7 @@ import edu.macalester.graphics.Ellipse;
 public class Ball extends Ellipse {
 
     public static final Color BALL_COLOR  = Color.WHITE;
-    public static final double BALL_RADIUS = Paddle.PADDLE_WIDTH * 0.075;
+    public static final double BALL_RADIUS = Paddle.PADDLE_WIDTH * 0.07;
 
     private double centerX;
     private double centerY;
@@ -17,7 +17,7 @@ public class Ball extends Ellipse {
 
     private double initialSpeed;
     private double angleInRadians;
-    private BallManager ballManager = new BallManager();
+    private IntersectionManager ballManager = new IntersectionManager();
 
     public Ball() {
         
@@ -46,6 +46,22 @@ public class Ball extends Ellipse {
         return centerY;
     }
 
+    public void setYVelocity(double yVelocity) {
+        this.yVelocity = yVelocity;
+    }
+
+    public void setXVelocity(double xVelocity) {
+        this.xVelocity = xVelocity;
+    }
+
+    public double getYVelocity(){
+        return yVelocity;
+    }
+
+    public double getXVelocity(){
+        return xVelocity;
+    }
+
     public void addToCanvas(CanvasWindow canvas) {
         canvas.add(this);
     }
@@ -55,39 +71,27 @@ public class Ball extends Ellipse {
     }
 
     public void updatePosition(CanvasWindow canvas, Paddle paddle, Bricks bricks) {
-        centerX = this.getCenterX() + xVelocity;
-        centerY = this.getCenterY() + yVelocity;
-        setCenter(centerX, centerY);
-        System.out.println(this.getX());
-        System.out.println(this.getY());
+        moveBall();
 
         if (wallHit()) {
             xVelocity = -1 * xVelocity;
-            centerX = this.getCenterX() + xVelocity;
-            centerY = this.getCenterY() + yVelocity;
-            setCenter(centerX, centerY);
+            moveBall();
         }
         else if (ballManager.paddleIntersection(this, paddle , canvas) == "leftbounce") {
             yVelocity = -1 * yVelocity;
             xVelocity = -1 * (Math.abs(xVelocity));
-            centerX = this.getCenterX() + xVelocity;
-            centerY = this.getCenterY() + yVelocity;
-            setCenter(centerX, centerY);
+            moveBall();
         }
 
         else if (ballManager.paddleIntersection(this, paddle, canvas) == "rightbounce") {
             yVelocity = -1 * yVelocity;
             xVelocity = Math.abs(xVelocity);
-            centerX = this.getCenterX() + xVelocity;
-            centerY = this.getCenterY() + yVelocity;
-            setCenter(centerX, centerY);
+            moveBall();
         }
 
         else if (ceilingHit()) {
             yVelocity = -1 * yVelocity;
-            centerX = this.getCenterX() + xVelocity;
-            centerY = this.getCenterY() + yVelocity;
-            setCenter(centerX, centerY);
+            moveBall();
         }
         else if (floorHit()) {
             BreakoutGame.setLives(BreakoutGame.getLives() -1);
@@ -98,14 +102,22 @@ public class Ball extends Ellipse {
             angleInRadians = Math.toRadians(rand.nextInt(90) + 225);
             this.xVelocity = initialSpeed * Math.cos(angleInRadians);
             this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
-
         }
         
         else if (ballManager.brickIntersection(this, bricks, canvas) == "topbounce") {
-            yVelocity = -1 * yVelocity;
-            centerX = this.getCenterX() + xVelocity;
-            centerY = this.getCenterY() + yVelocity;
-            setCenter(centerX, centerY);
+            moveBall();
+        }
+
+        else if (ballManager.brickIntersection(this, bricks, canvas) == "bottombounce") {
+            moveBall();
+            
+        }
+        else if (ballManager.brickIntersection(this, bricks, canvas) == "leftbounce") {
+            moveBall();
+        }
+
+        else if (ballManager.brickIntersection(this, bricks, canvas) == "rightbounce"){
+            moveBall();
         }
     }
 
@@ -140,5 +152,19 @@ public class Ball extends Ellipse {
         return true;
     }
 
+    public void moveBall() {
+        centerX = this.getCenterX() + xVelocity;
+        centerY = this.getCenterY() + yVelocity;
+        setCenter(centerX, centerY);
+    }
+
+    public void increaseSpeed() {
+        this.xVelocity = xVelocity + 0.5;
+        this.yVelocity = yVelocity + 0.5;
+    }
+
+    public double getSpeed() {
+        return initialSpeed;
+    }
 }
 
