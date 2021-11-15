@@ -105,14 +105,17 @@ public class Ball extends Ellipse {
         }
         
         else if (ballManager.brickIntersection(this, bricks, canvas) == "topbounce") {
+            yVelocity = -1 * yVelocity;
             moveBall();
         }
 
         else if (ballManager.brickIntersection(this, bricks, canvas) == "bottombounce") {
+            yVelocity = Math.abs(yVelocity);
             moveBall();
             
         }
         else if (ballManager.brickIntersection(this, bricks, canvas) == "leftbounce") {
+
             moveBall();
         }
 

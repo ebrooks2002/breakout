@@ -23,6 +23,7 @@ public class Bricks extends GraphicsGroup{
             newRow(color, yPos);
             yPos -= BRICK_HEIGHT + 10;
         }
+        
     }
         
    public void addToCanvas(CanvasWindow canvas) {
