@@ -14,16 +14,16 @@ public class Bricks extends GraphicsGroup{
     private ArrayList<Rectangle> bricksList = new ArrayList<Rectangle>();
     private final List<Color> colorList = new ArrayList<Color>(Arrays.asList(Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED));
 
-    public Bricks(){
+    public Bricks() {
         super();
         double yPos = 500;
-        for (Color color : colorList) {
-            newRow(color, yPos);
-            yPos -= BRICK_HEIGHT + 10;
-            newRow(color, yPos);
-            yPos -= BRICK_HEIGHT + 10;
-        }
-        
+        // for (Color color : colorList) {
+        //     addRow(color, yPos);
+        //     yPos -= BRICK_HEIGHT + 10;
+        //     addRow(color, yPos);
+        //     yPos -= BRICK_HEIGHT + 10;
+        // }
+        addRow(Color.BLUE, yPos);
     }
         
    public void addToCanvas(CanvasWindow canvas) {
@@ -34,7 +34,7 @@ public class Bricks extends GraphicsGroup{
        return bricksList;
    }
 
-   public void newRow(Color color, double yPos) {
+   public void addRow(Color color, double yPos) {
         int moveby = 0;
         for (int i = 0; i < 8; i++) {
             Rectangle rect = new Rectangle(20 + moveby, yPos, BRICK_WIDTH, BRICK_HEIGHT);
