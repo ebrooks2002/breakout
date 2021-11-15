@@ -8,7 +8,7 @@ import edu.macalester.graphics.CanvasWindow;
  */
 public class BreakoutGame {
     public static final int CANVAS_WIDTH = 800;
-    public static final int CANVAS_HEIGHT = 1100;
+    public static final int CANVAS_HEIGHT = 900;
 
     private CanvasWindow canvas;
     private Paddle paddle;

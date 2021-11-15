@@ -158,9 +158,11 @@ public class Ball extends Ellipse {
         setCenter(centerX, centerY);
     }
 
-    public void increaseSpeed() {
-        this.xVelocity = xVelocity + 0.5;
-        this.yVelocity = yVelocity + 0.5;
+    public void changeSpeed(double s) {
+        this.xVelocity = s;
+        this.yVelocity = s;
+        initialSpeed = s;
+
     }
 
     public double getSpeed() {

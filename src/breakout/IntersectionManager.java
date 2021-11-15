@@ -38,7 +38,7 @@ public class IntersectionManager {
             if (bricks.getElementAt(ballTop) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                ball.setYVelocity(ball.getYVelocity() * -1);
+                ball.setYVelocity(Math.abs(ball.getYVelocity()) * -1);
                 checkBrickColor(brick, ball);
                 return "topbounce";
             }
@@ -47,7 +47,7 @@ public class IntersectionManager {
                 System.out.println("ya");
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                ball.setYVelocity(ball.getYVelocity() * -1);
+                ball.setYVelocity(Math.abs(ball.getYVelocity()));
                 checkBrickColor(brick, ball);
                 return "bottombounce";
             }
@@ -73,20 +73,17 @@ public class IntersectionManager {
 
     public void checkBrickColor(Rectangle brick, Ball ball) {
 
-        if (brick.getFillColor() == Color.BLUE) {
-            ball.increaseSpeed();
-        }
         if (brick.getFillColor() == Color.GREEN) {
-            ball.increaseSpeed();
+            ball.changeSpeed(5.5);
         }
         if (brick.getFillColor() == Color.YELLOW) {
-            ball.increaseSpeed();
+            ball.changeSpeed(6);
         }
         if (brick.getFillColor() == Color.ORANGE) {
-            ball.increaseSpeed();
+            ball.changeSpeed(6.5);
         }
         if (brick.getFillColor() == Color.RED) {
-            ball.increaseSpeed();
+            ball.changeSpeed(7);
         }
     }
 }
