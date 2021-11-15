@@ -71,12 +71,14 @@ public class Ball extends Ellipse {
     }
 
     public void updatePosition(CanvasWindow canvas, Paddle paddle, Bricks bricks) {
+
         moveBall();
 
         if (wallHit()) {
             xVelocity = -1 * xVelocity;
             moveBall();
         }
+
         else if (ballManager.paddleIntersection(this, paddle , canvas) == "leftbounce") {
             yVelocity = -1 * yVelocity;
             xVelocity = -1 * (Math.abs(xVelocity));
@@ -93,6 +95,7 @@ public class Ball extends Ellipse {
             yVelocity = -1 * yVelocity;
             moveBall();
         }
+
         else if (floorHit()) {
             BreakoutGame.setLives(BreakoutGame.getLives() -1);
             this.setCenter(BreakoutGame.CANVAS_WIDTH * 0.5, BreakoutGame.CANVAS_HEIGHT * 0.7);
@@ -110,7 +113,7 @@ public class Ball extends Ellipse {
         }
 
         else if (ballManager.brickIntersection(this, bricks, canvas) == "bottombounce") {
-            this.yVelocity = yVelocity;
+            this.yVelocity = -1 * yVelocity;
             moveBall();
             
         }
@@ -156,8 +159,8 @@ public class Ball extends Ellipse {
     }
 
     public void moveBall() {
-        centerX = this.getCenterX() + xVelocity;
-        centerY = this.getCenterY() + yVelocity;
+        this.centerX = this.getCenterX() + xVelocity;
+        this.centerY = this.getCenterY() + yVelocity;
         setCenter(centerX, centerY);
     }
 
