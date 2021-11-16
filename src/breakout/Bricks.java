@@ -12,18 +12,12 @@ public class Bricks extends GraphicsGroup{
     public static final double BRICK_HEIGHT = BreakoutGame.CANVAS_HEIGHT * .045;
     public static final double BRICK_WIDTH = BreakoutGame.CANVAS_WIDTH * .11;
     private ArrayList<Rectangle> bricksList = new ArrayList<Rectangle>();
-    private final List<Color> colorList = new ArrayList<Color>(Arrays.asList(Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE));
+    private final List<Color> colorList = new ArrayList<Color>(Arrays.asList(Color.BLUE, Color.GREEN, Color.YELLOW, Color.PINK));
+    
 
     public Bricks() {
         super();
-        double yPos = 500;
-        // for (Color color : colorList) {
-        //     addRow(color, yPos);
-        //     yPos -= BRICK_HEIGHT + 10;
-        //     addRow(color, yPos);
-        //     yPos -= BRICK_HEIGHT + 10;
-        // }
-        addRow(Color.BLUE, yPos);
+        //addBricks();
     }
         
    public void addToCanvas(CanvasWindow canvas) {
@@ -42,6 +36,16 @@ public class Bricks extends GraphicsGroup{
             super.add(rect);
             bricksList.add(rect);
             moveby += BRICK_WIDTH + (BRICK_WIDTH * .1);
+        }
+    }
+
+    public void addBricks() {
+        double yPos = 500;
+        for (Color color : colorList) {
+            addRow(color, yPos);
+            yPos -= BRICK_HEIGHT + 10;
+            addRow(color, yPos);
+            yPos -= BRICK_HEIGHT + 10;
         }
     }
 }

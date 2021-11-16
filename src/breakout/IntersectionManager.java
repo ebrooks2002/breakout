@@ -16,11 +16,9 @@ public class IntersectionManager {
         if (canvas.getElementAt(ballBottom) == paddle) {
             
             if (ball.getCenterX() < paddle.getX() + paddle.getWidth()/2) {
-                
                 return "leftbounce";
             }
             if (ball.getCenterX() > paddle.getX() + paddle.getWidth()/2) {
-                
                 return "rightbounce";
             }
         }
@@ -39,27 +37,28 @@ public class IntersectionManager {
             if (bricks.getElementAt(ballTop) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                System.out.println(ball.getYVelocity());
+                ball.setYVelocity(ball.getYVelocity() * -1);
                 return "topbounce";
             }
 
-            else if (bricks.getElementAt(ballBottom) == brick) {
+            if (bricks.getElementAt(ballBottom) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                
-                System.out.println(ball.getYVelocity());
+                ball.setYVelocity(ball.getYVelocity() * -1);
                 return "bottombounce";
             }
 
             else if (bricks.getElementAt(ballLeft) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
+                ball.setXVelocity(ball.getXVelocity() * -1);;
                 return "leftbounce";
             }
 
             else if (bricks.getElementAt(ballRight) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
+                ball.setXVelocity(ball.getXVelocity() * -1);
                 return "rightbounce";
             }
         }

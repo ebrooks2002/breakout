@@ -6,6 +6,7 @@ import edu.macalester.graphics.CanvasWindow;
 /**
  * The game of Breakout.
  */
+
 public class BreakoutGame {
     public static final int CANVAS_WIDTH = 800;
     public static final int CANVAS_HEIGHT = 900;
@@ -35,11 +36,22 @@ public class BreakoutGame {
         canvas.onMouseMove((mouse) -> paddle.move(mouse.getPosition()));
         canvas.animate(() -> {
             ball.updatePosition(canvas, paddle, bricks);
+            if (ball.floorHit()){
+                resetGame();
+            }
          });
     }
 
     public static void setLives(int n) {
         lives = n;
+    }
+
+    public void resetGame() {
+        ball.removeFromCanvas(canvas);
+        Ball newBall = new Ball();
+        canvas.add(newBall);
+        canvas.pause(300);
+        canvas.draw();
     }
 
     public static int getLives(){
