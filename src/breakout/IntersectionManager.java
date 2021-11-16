@@ -10,16 +10,16 @@ import edu.macalester.graphics.Rectangle;
 public class IntersectionManager {
 
     public String paddleIntersection(Ball ball, Paddle paddle, CanvasWindow canvas){
-        double xPos = ball.getCenterX();
-        double yPos = ball.getCenterY();
-        Point ballBottom = new Point(xPos, yPos + Ball.BALL_RADIUS + 1);
+        
+        Point ballBottom = new Point(ball.getCenterX(), ball.getCenterY() + Ball.BALL_RADIUS + 1);
 
         if (canvas.getElementAt(ballBottom) == paddle) {
-            if (xPos < paddle.getX() + paddle.getWidth()/2) {
+            
+            if (ball.getCenterX() < paddle.getX() + paddle.getWidth()/2) {
                 
                 return "leftbounce";
             }
-            if (xPos > paddle.getX() + paddle.getWidth()/2) {
+            if (ball.getCenterX() > paddle.getX() + paddle.getWidth()/2) {
                 
                 return "rightbounce";
             }
@@ -28,63 +28,58 @@ public class IntersectionManager {
     }
     
     public String brickIntersection(Ball ball, Bricks bricks, CanvasWindow canvas) {
-        double xPos = ball.getCenterX();
-        double yPos = ball.getCenterY();
-        Point ballBottom = new Point(xPos, yPos + Ball.BALL_RADIUS + 1);
-        Point ballLeft = new Point(xPos - Ball.BALL_RADIUS - 1, yPos);
-        Point ballTop = new Point(xPos, yPos - Ball.BALL_RADIUS - 1);
-        Point ballRight = new Point(xPos + Ball.BALL_RADIUS + 1, yPos);
 
+        Point ballBottom = new Point(ball.getCenterX(), ball.getCenterY() + Ball.BALL_RADIUS + 1);
+        Point ballLeft = new Point(ball.getCenterX() - Ball.BALL_RADIUS - 1, ball.getCenterY());
+        Point ballTop = new Point(ball.getCenterX(), ball.getCenterY() - Ball.BALL_RADIUS - 1);
+        Point ballRight = new Point(ball.getCenterX() + Ball.BALL_RADIUS + 1, ball.getCenterY());
+        
         for (Rectangle brick : bricks.getBricksList()){
 
             if (bricks.getElementAt(ballTop) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                checkBrickColor(brick, ball);
+                System.out.println(ball.getYVelocity());
                 return "topbounce";
             }
 
             else if (bricks.getElementAt(ballBottom) == brick) {
-                System.out.println("ya");
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                checkBrickColor(brick, ball);
+                
+                System.out.println(ball.getYVelocity());
                 return "bottombounce";
             }
 
             else if (bricks.getElementAt(ballLeft) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                ball.setXVelocity(ball.getXVelocity() * -1);
-                checkBrickColor(brick, ball);
                 return "leftbounce";
             }
 
             else if (bricks.getElementAt(ballRight) == brick) {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
-                ball.setXVelocity(ball.getXVelocity() * -1);
-                checkBrickColor(brick, ball);
                 return "rightbounce";
             }
         }
         return "false";
     }
 
-    public void checkBrickColor(Rectangle brick, Ball ball)  {
+    // public void checkBrickColor(Rectangle brick, Ball ball)  {
 
-        if (brick.getFillColor() == Color.GREEN) {
-            ball.changeSpeed(5.5);
-        }
-        if (brick.getFillColor() == Color.YELLOW) {
-            ball.changeSpeed(6);
-        }
-        if (brick.getFillColor() == Color.ORANGE) {
-            ball.changeSpeed(6.5);
-        }
-        if (brick.getFillColor() == Color.RED) {
-            ball.changeSpeed(7);
-        }
-    }
+    //     if (brick.getFillColor() == Color.GREEN) {
+    //         ball.changeSpeed(5.5);
+    //     }
+    //     if (brick.getFillColor() == Color.YELLOW) {
+    //         ball.changeSpeed(6);
+    //     }
+    //     if (brick.getFillColor() == Color.ORANGE) {
+    //         ball.changeSpeed(6.5);
+    //     }
+    //     if (brick.getFillColor() == Color.RED) {
+    //         ball.changeSpeed(7);
+    //     }
+    // }
 }
 

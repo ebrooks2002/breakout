@@ -17,7 +17,7 @@ public class Ball extends Ellipse {
 
     private double initialSpeed;
     private double angleInRadians;
-    private IntersectionManager ballManager = new IntersectionManager();
+    private IntersectionManager intersectionManager = new IntersectionManager();
 
     public Ball() {
         
@@ -28,7 +28,6 @@ public class Ball extends Ellipse {
         initialSpeed = 5;
         
         Random rand = new Random();
-
         angleInRadians = Math.toRadians(rand.nextInt(90) + 225);
         this.xVelocity = initialSpeed * Math.cos(angleInRadians);
         this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
@@ -71,21 +70,19 @@ public class Ball extends Ellipse {
     }
 
     public void updatePosition(CanvasWindow canvas, Paddle paddle, Bricks bricks) {
-
         moveBall();
 
         if (wallHit()) {
             xVelocity = -1 * xVelocity;
             moveBall();
         }
-
-        else if (ballManager.paddleIntersection(this, paddle , canvas) == "leftbounce") {
+        else if (intersectionManager.paddleIntersection(this, paddle , canvas) == "leftbounce") {
             yVelocity = -1 * yVelocity;
             xVelocity = -1 * (Math.abs(xVelocity));
             moveBall();
         }
 
-        else if (ballManager.paddleIntersection(this, paddle, canvas) == "rightbounce") {
+        else if (intersectionManager.paddleIntersection(this, paddle, canvas) == "rightbounce") {
             yVelocity = -1 * yVelocity;
             xVelocity = Math.abs(xVelocity);
             moveBall();
@@ -98,6 +95,7 @@ public class Ball extends Ellipse {
 
         else if (floorHit()) {
             BreakoutGame.setLives(BreakoutGame.getLives() -1);
+            System.out.println(BreakoutGame.getLives());
             this.setCenter(BreakoutGame.CANVAS_WIDTH * 0.5, BreakoutGame.CANVAS_HEIGHT * 0.7);
             canvas.pause(300);
             canvas.draw();
@@ -107,22 +105,26 @@ public class Ball extends Ellipse {
             this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
         }
         
-        else if (ballManager.brickIntersection(this, bricks, canvas) == "topbounce") {
-            this.yVelocity = -1 * yVelocity;
+        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "topbounce") {
+            yVelocity = -1 * yVelocity;
+            System.out.println(yVelocity);
             moveBall();
         }
 
-        else if (ballManager.brickIntersection(this, bricks, canvas) == "bottombounce") {
-            this.yVelocity = -1 * yVelocity;
+        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "bottombounce") {
+            yVelocity = yVelocity * -1;
+            System.out.println(yVelocity + "bottom bounce");
+
             moveBall();
             
         }
-        else if (ballManager.brickIntersection(this, bricks, canvas) == "leftbounce") {
-
+        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "leftbounce") {
+            xVelocity = -1 * xVelocity;
             moveBall();
         }
 
-        else if (ballManager.brickIntersection(this, bricks, canvas) == "rightbounce"){
+        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "rightbounce") {
+            xVelocity = -1 * xVelocity;
             moveBall();
         }
     }
@@ -159,9 +161,9 @@ public class Ball extends Ellipse {
     }
 
     public void moveBall() {
-        this.centerX = this.getCenterX() + xVelocity;
-        this.centerY = this.getCenterY() + yVelocity;
-        setCenter(centerX, centerY);
+        centerX = this.getCenterX() + xVelocity;
+        centerY = this.getCenterY() + yVelocity;
+        this.setCenter(centerX, centerY);
     }
 
     public void changeSpeed(double s) {

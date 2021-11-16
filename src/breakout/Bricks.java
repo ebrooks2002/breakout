@@ -9,10 +9,10 @@ import java.util.List;
 
 public class Bricks extends GraphicsGroup{
 
-    public static final double BRICK_HEIGHT = BreakoutGame.CANVAS_HEIGHT * .03;
+    public static final double BRICK_HEIGHT = BreakoutGame.CANVAS_HEIGHT * .045;
     public static final double BRICK_WIDTH = BreakoutGame.CANVAS_WIDTH * .11;
     private ArrayList<Rectangle> bricksList = new ArrayList<Rectangle>();
-    private final List<Color> colorList = new ArrayList<Color>(Arrays.asList(Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED));
+    private final List<Color> colorList = new ArrayList<Color>(Arrays.asList(Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE));
 
     public Bricks() {
         super();
