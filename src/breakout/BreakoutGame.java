@@ -1,15 +1,16 @@
+// Author: Ethan Brooks
+// Class Description: This is the main class that runs Breakout. It adds all graphical components to
+// the window, and then animates them.
 package breakout;
 
 import java.awt.Color;
-
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
 
 /**
- * The game of Breakout.
+ * Main class that runs the game.
  */
-
 public class BreakoutGame {
 
     public static final int CANVAS_WIDTH = 900;
@@ -23,6 +24,9 @@ public class BreakoutGame {
     private static GraphicsText livesLeft;
     private static int lives = 3;
 
+    /**
+     * Creates all the graphics objects, and adds them to canvas.
+     */
     public BreakoutGame() {
         canvas = new CanvasWindow("Breakout!", CANVAS_WIDTH, CANVAS_HEIGHT);
         canvas.setBackground(Color.BLACK);
@@ -56,6 +60,9 @@ public class BreakoutGame {
         livesLeft.setFillColor(Color.WHITE);
     }
 
+    /**
+     * Updates paddle position, and animates the ball while checking if player has won/lost.
+     */
     public void run() {
 
         canvas.onMouseMove((mouse) -> paddle.move(mouse.getPosition()));
@@ -66,7 +73,6 @@ public class BreakoutGame {
                 if (ball.floorHit()) {
                     setLives(lives - 1);
                     resetBall();
-
                 }
                 if (bricks.getBricksList().size() == 0) {
                     canvas.add(youWin);
@@ -80,6 +86,9 @@ public class BreakoutGame {
         livesLeft.setText("You have " + getLives() + " lives left");
     }
 
+    /**
+     * Waits 3 seconds, and puts a new ball back to starting point.
+     */
     public void resetBall() {
         if (getLives() > 0) {
             canvas.remove(ball);
@@ -87,8 +96,7 @@ public class BreakoutGame {
             canvas.add(ball);
             canvas.pause(300);
             canvas.draw();
-        } 
-        else {
+        } else {
             canvas.add(youLose);
         }
     }
