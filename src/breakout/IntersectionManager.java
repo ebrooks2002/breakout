@@ -1,7 +1,7 @@
 package breakout;
 
 
-
+import java.awt.Color;
 import edu.macalester.graphics.CanvasWindow;
 
 import edu.macalester.graphics.Point;
@@ -38,6 +38,7 @@ public class IntersectionManager {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
                 ball.setYVelocity(ball.getYVelocity() * -1);
+                increaseBallSpeed(brick, ball);
                 return "topbounce";
             }
 
@@ -45,6 +46,7 @@ public class IntersectionManager {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
                 ball.setYVelocity(ball.getYVelocity() * -1);
+                increaseBallSpeed(brick, ball);
                 return "bottombounce";
             }
 
@@ -52,6 +54,7 @@ public class IntersectionManager {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
                 ball.setXVelocity(ball.getXVelocity() * -1);;
+                increaseBallSpeed(brick, ball);
                 return "leftbounce";
             }
 
@@ -59,26 +62,25 @@ public class IntersectionManager {
                 bricks.remove(brick);
                 bricks.getBricksList().remove(brick);
                 ball.setXVelocity(ball.getXVelocity() * -1);
+                increaseBallSpeed(brick, ball);
                 return "rightbounce";
             }
         }
         return "false";
     }
 
-    // public void checkBrickColor(Rectangle brick, Ball ball)  {
+    public void increaseBallSpeed(Rectangle brick, Ball ball)  {
 
-    //     if (brick.getFillColor() == Color.GREEN) {
-    //         ball.changeSpeed(5.5);
-    //     }
-    //     if (brick.getFillColor() == Color.YELLOW) {
-    //         ball.changeSpeed(6);
-    //     }
-    //     if (brick.getFillColor() == Color.ORANGE) {
-    //         ball.changeSpeed(6.5);
-    //     }
-    //     if (brick.getFillColor() == Color.RED) {
-    //         ball.changeSpeed(7);
-    //     }
-    // }
+        if (brick.getFillColor() == Color.GREEN && ball.getSpeed() < 1.2) {
+            ball.changeSpeed(1.2);
+        }
+        if ((brick.getFillColor() == Color.YELLOW) && (ball.getSpeed() < 1.3)) {
+            ball.changeSpeed(1.3);
+        }
+        if (brick.getFillColor() == Color.PINK && (ball.getSpeed() < 1.4)) {
+            ball.changeSpeed(1.4);
+        }
+        
+    }
 }
 

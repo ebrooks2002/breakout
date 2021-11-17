@@ -25,7 +25,7 @@ public class Ball extends Ellipse {
         
         centerX = BreakoutGame.CANVAS_WIDTH * 0.5;
         centerY = BreakoutGame.CANVAS_HEIGHT * 0.7;
-        initialSpeed = 5;
+        initialSpeed = 7;
         
         Random rand = new Random();
         
@@ -151,9 +151,10 @@ public class Ball extends Ellipse {
     }
 
     public void changeSpeed(double s) {
-        this.xVelocity = s;
-        this.yVelocity = s;
-        initialSpeed = s;
+        this.xVelocity = this.xVelocity * s;
+        this.yVelocity = this.yVelocity * s;
+        this.initialSpeed = s;
+        
     }
 
     public double getSpeed() {
