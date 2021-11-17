@@ -1,7 +1,5 @@
 package breakout;
 import java.awt.Color;
-
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Point;
 import edu.macalester.graphics.Rectangle;
 
@@ -27,12 +25,4 @@ public class Paddle extends Rectangle {
         }
     }
 
-    public void addToCanvas(CanvasWindow canvas){
-        canvas.add(this);
-    }
-
-    public void removeFromCanvas(CanvasWindow canvas){
-        canvas.remove(this);
-    }
-    
 }
