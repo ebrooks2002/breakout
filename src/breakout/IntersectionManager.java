@@ -9,23 +9,26 @@ import edu.macalester.graphics.Rectangle;
 
 public class IntersectionManager {
 
-    public String paddleIntersection(Ball ball, Paddle paddle, CanvasWindow canvas){
+    public void paddleIntersection(Ball ball, Paddle paddle, CanvasWindow canvas){
         
         Point ballBottom = new Point(ball.getCenterX(), ball.getCenterY() + Ball.BALL_RADIUS + 1);
 
         if (canvas.getElementAt(ballBottom) == paddle) {
             
             if (ball.getCenterX() < paddle.getX() + paddle.getWidth()/2) {
-                return "leftbounce";
+                ball.setYVelocity(ball.getYVelocity() * -1);
+                ball.setXVelocity(Math.abs(ball.getXVelocity()) * -1);
+                return;
             }
             if (ball.getCenterX() > paddle.getX() + paddle.getWidth()/2) {
-                return "rightbounce";
+                ball.setYVelocity(ball.getYVelocity() * -1);
+                ball.setXVelocity(Math.abs(ball.getXVelocity()));
+                return;
             }
         }
-        return "false";
     }
     
-    public String brickIntersection(Ball ball, Bricks bricks, CanvasWindow canvas) {
+    public void brickIntersection(Ball ball, Bricks bricks, CanvasWindow canvas) {
 
         Point ballBottom = new Point(ball.getCenterX(), ball.getCenterY() + Ball.BALL_RADIUS + 1);
         Point ballLeft = new Point(ball.getCenterX() - Ball.BALL_RADIUS - 1, ball.getCenterY());
@@ -39,7 +42,7 @@ public class IntersectionManager {
                 bricks.getBricksList().remove(brick);
                 ball.setYVelocity(ball.getYVelocity() * -1);
                 increaseBallSpeed(brick, ball);
-                return "topbounce";
+                return;
             }
 
             if (bricks.getElementAt(ballBottom) == brick) {
@@ -47,7 +50,7 @@ public class IntersectionManager {
                 bricks.getBricksList().remove(brick);
                 ball.setYVelocity(ball.getYVelocity() * -1);
                 increaseBallSpeed(brick, ball);
-                return "bottombounce";
+                return;
             }
 
             else if (bricks.getElementAt(ballLeft) == brick) {
@@ -55,7 +58,7 @@ public class IntersectionManager {
                 bricks.getBricksList().remove(brick);
                 ball.setXVelocity(ball.getXVelocity() * -1);;
                 increaseBallSpeed(brick, ball);
-                return "leftbounce";
+                return;
             }
 
             else if (bricks.getElementAt(ballRight) == brick) {
@@ -63,10 +66,10 @@ public class IntersectionManager {
                 bricks.getBricksList().remove(brick);
                 ball.setXVelocity(ball.getXVelocity() * -1);
                 increaseBallSpeed(brick, ball);
-                return "rightbounce";
+                return;
             }
         }
-        return "false";
+        
     }
 
     public void increaseBallSpeed(Rectangle brick, Ball ball)  {

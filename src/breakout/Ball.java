@@ -20,7 +20,6 @@ public class Ball extends Ellipse {
     private IntersectionManager intersectionManager = new IntersectionManager();
 
     public Ball() {
-        
         super(0, 0, BALL_RADIUS*2, BALL_RADIUS*2);
         
         centerX = BreakoutGame.CANVAS_WIDTH * 0.5;
@@ -28,8 +27,10 @@ public class Ball extends Ellipse {
         initialSpeed = 7;
         
         Random rand = new Random();
-        
-        angleInRadians = Math.toRadians(rand.nextInt(90) + 225);
+        int randNum = rand.nextInt(8);
+        int[] startAngles = {220, 230, 240, 250, 290, 300, 310, 320};
+        angleInRadians = Math.toRadians(startAngles[randNum]);
+
         this.xVelocity = initialSpeed * Math.cos(angleInRadians);
         this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
 
@@ -72,45 +73,19 @@ public class Ball extends Ellipse {
 
     public void updatePosition(CanvasWindow canvas, Paddle paddle, Bricks bricks) {
         moveBall();
-
+        intersectionManager.brickIntersection(this, bricks, canvas);
+        intersectionManager.paddleIntersection(this, paddle, canvas);
         if (wallHit()) {
             xVelocity = -1 * xVelocity;
             moveBall();
         }
-        else if (intersectionManager.paddleIntersection(this, paddle , canvas) == "leftbounce") {
-            yVelocity = -1 * yVelocity;
-            xVelocity = -1 * (Math.abs(xVelocity));
-            moveBall();
-        }
-
-        else if (intersectionManager.paddleIntersection(this, paddle, canvas) == "rightbounce") {
-            yVelocity = -1 * yVelocity;
-            xVelocity = Math.abs(xVelocity);
-            moveBall();
-        }
+        
 
         else if (ceilingHit()) {
             yVelocity = -1 * yVelocity;
             moveBall();
         }
 
-        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "topbounce") {
-            moveBall();
-        }
-
-        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "bottombounce") {
-            
-            moveBall();
-        }
-        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "leftbounce") {
-            
-            moveBall();
-        }
-
-        else if (intersectionManager.brickIntersection(this, bricks, canvas) == "rightbounce") {
-            
-            moveBall();
-        }
     }
 
     public boolean wallHit() {
