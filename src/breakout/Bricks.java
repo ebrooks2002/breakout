@@ -17,7 +17,7 @@ public class Bricks extends GraphicsGroup{
 
     public Bricks() {
         super();
-        //addBricks();
+        addBricks();
     }
         
    public void addToCanvas(CanvasWindow canvas) {

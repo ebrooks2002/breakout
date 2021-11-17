@@ -28,6 +28,7 @@ public class Ball extends Ellipse {
         initialSpeed = 5;
         
         Random rand = new Random();
+        
         angleInRadians = Math.toRadians(rand.nextInt(90) + 225);
         this.xVelocity = initialSpeed * Math.cos(angleInRadians);
         this.yVelocity = initialSpeed * -Math.sin(angleInRadians);
@@ -93,10 +94,6 @@ public class Ball extends Ellipse {
             moveBall();
         }
 
-        // else if (floorHit()) {
-        //     resetBall(canvas);
-        // }
-        
         else if (intersectionManager.brickIntersection(this, bricks, canvas) == "topbounce") {
             moveBall();
         }

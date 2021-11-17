@@ -36,8 +36,12 @@ public class BreakoutGame {
         canvas.onMouseMove((mouse) -> paddle.move(mouse.getPosition()));
         canvas.animate(() -> {
             ball.updatePosition(canvas, paddle, bricks);
-            if (ball.floorHit()){
-                resetGame();
+            if (ball.floorHit()) {
+                setLives(lives - 1);
+                resetBall();
+            }
+            if (bricks.getBricksList().size() == 0) {
+                System.out.println("you win!");
             }
          });
     }
@@ -46,12 +50,18 @@ public class BreakoutGame {
         lives = n;
     }
 
-    public void resetGame() {
-        ball.removeFromCanvas(canvas);
-        Ball newBall = new Ball();
-        canvas.add(newBall);
-        canvas.pause(300);
-        canvas.draw();
+    public void resetBall() {
+        if (getLives() > 0) {
+            ball.removeFromCanvas(canvas);
+            ball = new Ball();
+            ball.addToCanvas(canvas);
+            canvas.pause(300);
+            canvas.draw();
+        }
+        else {
+            System.out.println("you lose!");
+            System.exit(0);
+        }
     }
 
     public static int getLives(){

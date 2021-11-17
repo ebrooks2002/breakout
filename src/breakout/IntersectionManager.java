@@ -1,6 +1,6 @@
 package breakout;
 
-import java.awt.Color;
+
 
 import edu.macalester.graphics.CanvasWindow;
 
